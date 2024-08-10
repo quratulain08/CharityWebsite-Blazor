@@ -1,0 +1,92 @@
+﻿@page "/login"
+@using Microsoft.AspNetCore.Components.Web
+
+<head>
+    <link rel="stylesheet" href="/css/Login.css">
+</head>
+
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <form action="#">
+            <h1>Create Account</h1>
+            <span>Use your email for registration</span>
+            <input type="text" placeholder="Name" />
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            <button>Sign Up</button>
+        </form>
+    </div>
+    <div class="form-container sign-in-container">
+        <form>
+            <div class="login_box">
+                <div class="login-header">
+                    <span>Login</span>
+                </div>
+
+                <div class="input_box">
+                    <input type="text" @bind="user.UserEmail" id="user" class="input-field" required>
+                    <label for="user" class="label">User Email</label>
+                    <i class="bx bx-user icon"></i>
+                </div>
+
+                <div class="input_box">
+                    <input type="password" @bind="user.PasswordHash" id="pass" class="input-field" required>
+                    <label for="pass" class="label">Password</label>
+                    <i class="bx bx-lock-alt icon"></i>
+                </div>
+
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <div class="forgot">
+                        <a href="#">Forgot password?</a>
+                    </div>
+                </div>
+
+                <div class="inputbox">
+                    <input type="submit" class="input-submit" @onclick="LoginUser" value="Login">
+                </div>
+
+                <div class="register">
+                    <span>Don't have an account? <a href="/signup">Register</a></span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-right">
+                <h1>Hello! Welcome</h1>
+                <p>Your donation today can be a beacon of hope for a better tomorrow</p>
+                <a href="/SignUp" class="btn">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    User user { get; set; } = new User();
+
+    private void LoginUser()
+    {
+        if (ValidateUser())
+        {
+            // Perform login logic here
+        }
+        else
+        {
+            // User object is not valid, show an error message or handle accordingly
+        }
+    }
+
+    private bool ValidateUser()
+    {
+        // Add any additional validation logic here
+        // For example, check if the user object has a valid email format, etc.
+
+        // For simplicity, let's assume the user object is always valid in this example
+        return true;
+    }
+}

@@ -1,0 +1,53 @@
+﻿@page "/SignUp"
+@using Microsoft.AspNetCore.Components.Web
+@using ClassLibraryModel
+@using ClassLibrary
+
+
+@inject NavigationManager nm
+<link href="css/SignUp.css" rel="stylesheet" />
+
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <form>
+            <h1>Create Account</h1>
+            <span>Use your email for registration</span>
+            <div class="input_box">
+                <input type="text" @bind="user.Username" id="username" class="input-field" required>
+                <label for="username" class="label">Username</label>
+                <i class="bx bx-user icon"></i>
+            </div>
+            <div class="input_box">
+                <input type="email" @bind="user.UserEmail" id="email" class="input-field" required>
+                <label for="email" class="label">Email</label>
+                <i class="bx bx-envelope icon"></i>
+            </div>
+            <div class="input_box">
+                <input type="password" @bind="user.PasswordHash" id="password" class="input-field" required>
+                <label for="password" class="label">Password</label>
+                <i class="bx bx-lock-alt icon"></i>
+            </div>
+            <div class="inputbox">
+                <button type="button" @onclick="SignUpUser" class="input-submit">Sign Up</button>
+            </div>
+        </form>
+    </div>
+    <div class="form-container sign-in-container">
+        <!-- Your sign-in form remains unchanged -->
+    </div>
+  
+    </div>
+
+@code {
+    User user { get; set; } = new User();
+    string cPass { get; set; }
+
+    private void SignUpUser()
+    {
+        if (cPass == user.PasswordHash)
+        {
+          DalUsers.InsertUser(user);
+            nm.NavigateTo($"/home/{user.Username}");
+        }
+    }
+}

@@ -1,0 +1,46 @@
+﻿@page "/counter"
+
+@inject NavigationManager nm
+<PageTitle>Index</PageTitle>
+<link rel="stylesheet" href="/css/Counter.css" />
+
+your id is =@id
+<EditForm Model="modelDonors" OnSubmit="SaveDonors">
+    <input type="text" placeholder="Enter Donor name" @bind-value="modelDonors.DonorName" /><br />
+    <input type="text" placeholder="Enter Donor Email" @bind-value="modelDonors.DonorEmail" /><br />
+    <input type="text" placeholder="Enter Donor Contact" @bind-value="modelDonors.DonorContact" /><br />
+    <input type="text" placeholder="Enter Organization name" @bind-value="modelDonors.OrganizationName" /><br />
+    <input type="text" placeholder="Enter Donor Cnic" @bind-value="modelDonors.DonorCNIC" /><br />
+    <input type="text" placeholder="Enter Donor Accountno" @bind-value="modelDonors.AccountNumber" /><br />
+    <input type="text" placeholder="Enter Bank name" @bind-value="modelDonors.BankName" /><br />
+    <input type="text" placeholder="Enter Amount" @bind-value="modelDonors.Amount" /><br />
+    <button type="submit">SAVE</button>
+</EditForm>
+
+@if (showConfirmationMessage)
+{
+    <p style="color: green; font-weight: bold;">Thank you for your donation!</p>
+}
+
+@code {
+
+    [Parameter] public string? id { get; set; }
+    ModelDonors modelDonors { get; set; } = new ModelDonors();
+    private bool showConfirmationMessage { get; set; } = false;
+
+    private async Task SaveDonors()
+    {
+        DvlDonors.SaveDonorInformation(modelDonors);
+        showConfirmationMessage = true;
+
+        // You can add a delay if you want to display the message for a few seconds
+        await Task.Delay(3000);
+
+        // Reset the form and hide the message
+        modelDonors = new ModelDonors();
+        showConfirmationMessage = false;
+
+        nm.NavigateTo("showdata");
+    }
+
+}

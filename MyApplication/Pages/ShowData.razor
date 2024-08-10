@@ -1,0 +1,43 @@
+﻿@page "/showdata"
+<h3>ShowData</h3>
+
+<table>
+    @foreach(var item in listDonors)
+    {
+        <tr>
+            <td>@item.DonorId</td>
+            <td>@item.DonorName</td>
+            <td>@item.DonorEmail</td>
+            <td>@item.DonorContact</td>
+            <td>@item.OrganizationName</td>
+            <td>@item.DonorCNIC</td>
+            <td>@item.BankName</td>
+            <td>@item.Amount</td>
+        <td>
+            <br/>
+            <button class="btn btn-outline-danger btn-sm" @onclick="()=>DeleteData(item.DonorId)">Delete </button>
+            <a href="counter/@item.DonorId" class="btn btn-outline-warning btn-sm">Update</a>
+           
+        </td>
+        </tr>
+    }
+</table>
+
+@code {
+
+    List<ModelDonors> listDonors { get; set; } = new List<ModelDonors>();
+    protected override void OnInitialized()
+    {
+        listDonors = DvlDonors.GetDonorInformationList();
+        base.OnInitialized();
+    }
+    private void DeleteData(int id)
+    {
+        DvlDonors.DeleteDonorInformation(id);
+        LoadData();
+    }
+    private void LoadData()
+    {
+        listDonors = DvlDonors.GetDonorInformationList();
+    }
+}
